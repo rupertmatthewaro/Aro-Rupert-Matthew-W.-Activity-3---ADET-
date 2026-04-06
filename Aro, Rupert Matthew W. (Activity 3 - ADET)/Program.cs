@@ -6,15 +6,29 @@ class Program
     {
         Console.WriteLine("=== Welcome to PUP Grade Calculator! ===\n");
 
-        // MIDTERM INPUTS
+        // MIDTERM RAW SCORE INPUTS
         Console.WriteLine("MIDTERM");
-        double midtermCS = GetValidInput("Enter Class Standing (0-70): ", 0, 70);
-        double midtermExam = GetValidInput("Enter Examinations/Projects (0-30): ", 0, 30);
+        double totalCSMid = GetValidInput("Enter total possible score for Class Standing: ", 1, double.MaxValue);
+        double obtainedCSMid = GetValidInput($"Enter obtained score for Class Standing (0 - {totalCSMid}): ", 0, totalCSMid);
 
-        // FINAL TERM INPUTS
+        double totalExamMid = GetValidInput("Enter total possible score for Exam/Project: ", 1, double.MaxValue);
+        double obtainedExamMid = GetValidInput($"Enter obtained score for Exam/Project (0 - {totalExamMid}): ", 0, totalExamMid);
+
+        // MIDTERM CONVERSION TO 70/30
+        double midtermCS = (obtainedCSMid / totalCSMid) * 70;
+        double midtermExam = (obtainedExamMid / totalExamMid) * 30;
+
+        // FINAL TERM RAW SCORE INPUTS
         Console.WriteLine("\nFINAL TERM");
-        double finalCS = GetValidInput("Enter Class Standing (0-70): ", 0, 70);
-        double finalExam = GetValidInput("Enter Examinations/Projects (0-30): ", 0, 30);
+        double totalCSFin = GetValidInput("Enter total possible score for Class Standing: ", 1, double.MaxValue);
+        double obtainedCSFin = GetValidInput($"Enter obtained score for Class Standing (0 - {totalCSFin}): ", 0, totalCSFin);
+
+        double totalExamFin = GetValidInput("Enter total possible score for Exam/Project: ", 1, double.MaxValue);
+        double obtainedExamFin = GetValidInput($"Enter obtained score for Exam/Project (0 - {totalExamFin}): ", 0, totalExamFin);
+
+        // FINAL TERM CONVERSION TO 70/30
+        double finalCS = (obtainedCSFin / totalCSFin) * 70;
+        double finalExam = (obtainedExamFin / totalExamFin) * 30;
 
         // COMPUTATION
         double midtermGrade = midtermCS + midtermExam;
