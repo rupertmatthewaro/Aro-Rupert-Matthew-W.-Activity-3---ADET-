@@ -159,5 +159,3 @@ class Program
         else return "Failure";
     }
 }
-
-// THIS COMMENT IS FOR PULL DEMONSTRATION
