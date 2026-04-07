@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 
 class Program
 {
@@ -6,8 +7,13 @@ class Program
     {
         Console.WriteLine("=== Welcome to PUP Grade Calculator! ===\n");
 
+        // STUDENT INFORMATION INPUTS
+        Console.WriteLine("STUDENT INFORMATION");
+        string lastName = GetValidLastName("Enter Student Last Name: ");
+        string studentNumber = GetValidStudentNumber("Enter Student Number (XXXX-XXXXX-MN-X): ");
+
         // MIDTERM RAW SCORE INPUTS
-        Console.WriteLine("MIDTERM");
+        Console.WriteLine("\nMIDTERM");
         double totalCSMid = GetValidInput("Enter total possible score for Class Standing: ", 1, double.MaxValue);
         double obtainedCSMid = GetValidInput($"Enter obtained score for Class Standing (0 - {totalCSMid}): ", 0, totalCSMid);
 
@@ -52,6 +58,9 @@ class Program
 
         // OUTPUT
         Console.WriteLine("\n=== RESULTS ===");
+        Console.WriteLine("\nSTUDENT INFORMATION");
+        Console.WriteLine($"Student Last Name: {lastName}");
+        Console.WriteLine($"Student Number: {studentNumber}");
 
         Console.WriteLine("\nMIDTERM GRADE");
         Console.WriteLine($"Grade: {midtermGrade:F2}");
@@ -79,17 +88,45 @@ class Program
 
             if (!double.TryParse(input, out value))
             {
-                Console.WriteLine("❌ Invalid input. Please enter a number.\n");
+                Console.WriteLine("Invalid input. Please enter a number.\n");
                 continue;
             }
 
             if (value < min || value > max)
             {
-                Console.WriteLine($"❌ Input must be between {min} and {max}.\n");
+                Console.WriteLine($"Input must be between {min} and {max}.\n");
                 continue;
             }
 
             return value;
+        }
+    }
+
+    // LAST NAME VALIDATION
+    static string GetValidLastName(string message)
+    {
+        while (true)
+        {
+            Console.Write(message);
+            string input = Console.ReadLine();
+            if (Regex.IsMatch(input, @"^[A-Za-z ]+$"))
+                return input.Trim();
+            else
+                Console.WriteLine("Invalid last name. Only letters and spaces are allowed.\n");
+        }
+    }
+
+    // STUDENT NUMBER VALIDATION (XXXX-XXXXX-MN-X)
+    static string GetValidStudentNumber(string message)
+    {
+        while (true)
+        {
+            Console.Write(message);
+            string input = Console.ReadLine();
+            if (Regex.IsMatch(input, @"^\d{4}-\d{5}-MN-\d$"))
+                return input;
+            else
+                Console.WriteLine("Invalid format. Must be XXXX-XXXXX-MN-X where X is a whole positive number.\n");
         }
     }
 
